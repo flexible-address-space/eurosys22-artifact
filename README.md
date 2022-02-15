@@ -93,6 +93,9 @@ Executing `python throughput.py` inside the results directory will produce all t
 following the same layout as shown in the submission.
 The data are printed directly to `stdout` in LaTeX table format.
 Running `python smart.py` will generate the write amplification ratios shown in the table.
+Note that for `smart.py`, you will need to update the variable `base` in the source code to the corresponding data
+written size in GB (1 or 16) to get the correct write amplification ratio.
+The default value is 1.
 
 #### Figure 10
 
