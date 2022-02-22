@@ -14,8 +14,8 @@ targets = (
 exps = (
     ("insert", "randw", "seqw"),
     ("insert_seqr_cold", "randw_seqr_cold", "seqw_seqr_cold"),
-    ("insert_seqr_warm", "randw_seqr_warm", "seqw_seqr_warm"),
     ("insert_randr_cold", "randw_randr_cold", "seqw_randr_cold"),
+    ("insert_seqr_warm", "randw_seqr_warm", "seqw_seqr_warm"),
     ("insert_randr_warm", "randw_randr_warm", "seqw_randr_warm"),
 )
 

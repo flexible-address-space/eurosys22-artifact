@@ -155,6 +155,8 @@ To decode the latency metrics, you can refer to the CDF output in each file.
 Specifically, for 99P and 95P latencies, you can check the very first `95.xx` and `99.yy` in the last column.
 Then, the number in the first column in that row corresponds to the latency number in micro-seconds.
 To calculate the average latency, you can run the provided script `latency.py` in the directory.
+Note that before running `latency.py`, you need to manually parse the output file and only keep the CDF-related
+outputs. Do not include any other lines, like the throughput.
 
 #### Figure 12 (a)(b)
 
