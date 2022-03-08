@@ -131,7 +131,7 @@ respectively.
 
 #### Figure 11 \(c\)(d)
 
-In `flexdb_benchmark/results/flexdb/write/` directory, there are to plotting scripts - `read.py` and `scan.py`.
+In `flexdb_benchmark/results/flexdb/read/` directory, there are to plotting scripts - `read.py` and `scan.py`.
 Using `python` to execute them will produce `flexdb-read.pdf` and `flexdb-scan.pdf`,
 which correspond to Figure 11\(c\) and 11(d), respectively.
 
