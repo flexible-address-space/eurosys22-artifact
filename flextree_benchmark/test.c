@@ -53,7 +53,8 @@ void insert()
         flextree_insert(index, seq[i], NR_EXTENTS_INSERT-1, 1);
 #endif
     }
-    printf("--> insert %f mops/sec\n", (double)NR_EXTENTS_INSERT * 1e3 / time_diff_nsec(t));
+    u64 t2 = time_diff_nsec(t);
+    printf("--> insert %f mops/sec (time %fs)\n", (double)NR_EXTENTS_INSERT * 1e3 / t2, (float)t2/1e9);
     fflush(stdout);
 
 #ifdef ARRAY_TEST
@@ -92,12 +93,26 @@ void regular() {
     u64 t = time_nsec();
     for (u64 i=0; i<NR_EXTENTS_REGULAR; i++) {
 #ifdef ARRAY_TEST
-        brute_force_insert(index , i, NR_EXTENTS_REGULAR-i, 1);
+        brute_force_insert(index, i, NR_EXTENTS_REGULAR-i, 1);
 #else
         flextree_insert(index, i, NR_EXTENTS_REGULAR-i, 1);
 #endif
     }
-    printf("--> append %f mops/sec\n", (double)NR_EXTENTS_REGULAR * 1e3 / time_diff_nsec(t));
+    u64 t2 = time_diff_nsec(t);
+    printf("--> append %f mops/sec (time %fs)\n", (double)NR_EXTENTS_REGULAR * 1e3 / t2, (float)t2/1e9);
+    fflush(stdout);
+
+    // query (sequential for verification)
+    t = time_nsec();
+    for (u64 i=0; i<NR_EXTENTS_REGULAR/10; i++) {
+#ifdef ARRAY_TEST
+        r += brute_force_pquery(index, i);
+#else
+        r += flextree_pquery(index, i);
+#endif
+    }
+    t2 = time_diff_nsec(t);
+    printf("    * pquery (seq) %f mops/sec (time %fs)\n", (double)NR_EXTENTS_REGULAR * 1e3 / t2 / 10, (float)t2/1e9);
     fflush(stdout);
 
     // query
@@ -109,7 +124,8 @@ void regular() {
         r += flextree_pquery(index, seq[i]);
 #endif
     }
-    printf("--> pquery %f mops/sec\n", (double)NR_EXTENTS_REGULAR * 1e3 / time_diff_nsec(t));
+    t2 = time_diff_nsec(t);
+    printf("--> pquery %f mops/sec (time %fs)\n", (double)NR_EXTENTS_REGULAR * 1e3 / t2 / 10, (float)t2/1e9);
     fflush(stdout);
 
     // rquery
@@ -121,7 +137,8 @@ void regular() {
         flextree_query_wbuf(index, seq[i], 50, rr);
 #endif
     }
-    printf("--> rquery %f mops/sec\n", (double)NR_EXTENTS_REGULAR * 1e3 / time_diff_nsec(t));
+    t2 = time_diff_nsec(t);
+    printf("--> rquery %f mops/sec (time %fs)\n", (double)NR_EXTENTS_REGULAR * 1e3 / t2 / 10, (float)t2/1e9);
     fflush(stdout);
 
 #ifdef ARRAY_TEST
