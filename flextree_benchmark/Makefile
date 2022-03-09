@@ -37,6 +37,12 @@ else ifeq ($(BTREE),y)
 FLG += -DFLEXTREE_NAIVE
 endif
 
-FLG += -DNR_EXTENTS_INSERT=$(INSERT) -DNR_EXTENTS_REGULAR=$(REGULAR)
+ifneq ($(INSERT),)
+FLG += -DNR_EXTENTS_INSERT=$(INSERT)
+endif
+
+ifneq ($(REGULAR),)
+FLG += -DNR_EXTENTS_REGULAR=$(REGULAR)
+endif
 
 include ../c/Makefile.common

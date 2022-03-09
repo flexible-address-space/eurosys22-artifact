@@ -12,10 +12,23 @@
 #include "../c/lib.h"
 #include "../flextree.h"
 
+#ifndef NR_EXTENTS_INSERT
+#define NR_EXTENTS_INSERT (100000lu) // 10^5
+#endif
+
+#ifndef NR_EXTENTS_REGULAR
+#define NR_EXTENTS_REGULAR (100000000lu) // 10^8
+#endif
+
 volatile u64 r = 0;
 
 void insert()
 {
+    u64 *seq = malloc(sizeof(u64) * NR_EXTENTS_INSERT);
+    seq[0] = 0;
+    for (u64 i=1; i<NR_EXTENTS_INSERT; i++) {
+        seq[i] = rand() % i;
+    }
 #ifdef ARRAY_TEST
     printf("sorted array test extents %lu\n", NR_EXTENTS_INSERT);
 #else
@@ -35,9 +48,9 @@ void insert()
     u64 t = time_nsec();
     for (u64 i=0; i<NR_EXTENTS_INSERT; i++) {
 #ifdef ARRAY_TEST
-        brute_force_insert(index, 0, i, 1);
+        brute_force_insert(index, seq[i], NR_EXTENTS_INSERT-1, 1);
 #else
-        flextree_insert(index, 0, i, 1);
+        flextree_insert(index, seq[i], NR_EXTENTS_INSERT-1, 1);
 #endif
     }
     printf("--> insert %f mops/sec\n", (double)NR_EXTENTS_INSERT * 1e3 / time_diff_nsec(t));
